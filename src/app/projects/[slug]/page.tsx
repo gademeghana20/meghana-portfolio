@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
@@ -62,6 +63,17 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
             </a>
           )}
         </div>
+
+        {project.imageUrl && (
+          <Image
+            src={project.imageUrl}
+            alt={`${project.title} screenshot`}
+            width={768}
+            height={432}
+            sizes="(min-width: 768px) 768px, 100vw"
+            className="mt-8 h-auto w-full rounded-xl border border-border"
+          />
+        )}
 
         <Block title="Problem">
           <p>{project.problem}</p>

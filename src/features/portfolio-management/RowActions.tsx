@@ -9,7 +9,8 @@ type Props = {
   table: string;
   id: string;
   title: string;
-  published: boolean;
+  /** undefined = this kind of item has no draft/publish state. */
+  published?: boolean;
   editHref: string;
   isFirst: boolean;
   isLast: boolean;
@@ -71,15 +72,17 @@ export function RowActions({ table, id, title, published, editHref, isFirst, isL
       >
         <ArrowDown size={13} aria-hidden="true" />
       </button>
-      <button
-        type="button"
-        disabled={pending}
-        onClick={() => run(() => setPublished(table, id, !published))}
-        className={btn}
-      >
-        {published ? <EyeOff size={13} aria-hidden="true" /> : <Eye size={13} aria-hidden="true" />}
-        {published ? "Unpublish" : "Publish"}
-      </button>
+      {published !== undefined && (
+        <button
+          type="button"
+          disabled={pending}
+          onClick={() => run(() => setPublished(table, id, !published))}
+          className={btn}
+        >
+          {published ? <EyeOff size={13} aria-hidden="true" /> : <Eye size={13} aria-hidden="true" />}
+          {published ? "Unpublish" : "Publish"}
+        </button>
+      )}
       <Link href={editHref} className={btn}>
         <Pencil size={13} aria-hidden="true" /> Edit
       </Link>

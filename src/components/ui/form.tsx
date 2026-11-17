@@ -75,6 +75,79 @@ export function TextField({
   );
 }
 
+export function SelectField({
+  name,
+  label,
+  defaultValue,
+  hint,
+  options,
+}: {
+  name: string;
+  label: string;
+  defaultValue?: string;
+  hint?: string;
+  options: { value: string; label: string }[];
+}) {
+  const error = useContext(FieldErrorsContext)[name];
+  return (
+    <Shell id={name} label={label} hint={hint} error={error}>
+      <select
+        id={name}
+        name={name}
+        defaultValue={defaultValue}
+        className={cn(control, error ? "border-red-400" : "border-border")}
+      >
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+    </Shell>
+  );
+}
+
+export function FileField({
+  name,
+  label,
+  hint,
+  accept,
+}: {
+  name: string;
+  label: string;
+  hint?: string;
+  accept: string;
+}) {
+  const error = useContext(FieldErrorsContext)[name];
+  return (
+    <Shell id={name} label={label} hint={hint} error={error}>
+      <input
+        id={name}
+        name={name}
+        type="file"
+        accept={accept}
+        aria-invalid={!!error}
+        className="mt-1.5 block w-full text-sm text-muted file:mr-4 file:rounded-lg file:border file:border-border file:bg-surface-2 file:px-4 file:py-2 file:text-sm file:text-foreground hover:file:border-accent"
+      />
+    </Shell>
+  );
+}
+
+export function CheckboxField({
+  name,
+  label,
+}: {
+  name: string;
+  label: string;
+}) {
+  return (
+    <label className="flex items-center gap-2.5 text-sm">
+      <input type="checkbox" name={name} className="size-4 accent-[var(--accent)]" />
+      {label}
+    </label>
+  );
+}
+
 export function TextAreaField({
   name,
   label,

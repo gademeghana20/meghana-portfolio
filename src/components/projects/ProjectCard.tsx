@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import type { Project, ProjectStatus } from "@/types/portfolio";
@@ -13,13 +14,24 @@ export const statusLabel: Record<ProjectStatus, string> = {
 export function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="flex flex-col overflow-hidden rounded-xl border border-border bg-surface transition-colors hover:border-accent/50">
-      {/* Thumbnail placeholder until an image is uploaded in the admin. */}
-      <div
-        aria-hidden="true"
-        className="flex h-40 items-center justify-center border-b border-border bg-surface-2 font-mono text-sm text-muted"
-      >
-        {project.imageUrl ? null : "Screenshot coming soon"}
-      </div>
+      {project.imageUrl ? (
+        <div className="relative h-40 border-b border-border bg-surface-2">
+          <Image
+            src={project.imageUrl}
+            alt={`${project.title} screenshot`}
+            fill
+            sizes="(min-width: 768px) 40vw, 100vw"
+            className="object-cover"
+          />
+        </div>
+      ) : (
+        <div
+          aria-hidden="true"
+          className="flex h-40 items-center justify-center border-b border-border bg-surface-2 font-mono text-sm text-muted"
+        >
+          Screenshot coming soon
+        </div>
+      )}
 
       <div className="flex flex-1 flex-col p-6">
         <p className="font-mono text-xs text-accent">{statusLabel[project.status]}</p>

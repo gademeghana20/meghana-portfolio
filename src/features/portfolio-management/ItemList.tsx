@@ -6,7 +6,8 @@ export interface ListItem {
   id: string;
   title: string;
   subtitle?: string;
-  published: boolean;
+  /** undefined = no draft/publish state (e.g. skill categories). */
+  published?: boolean;
 }
 
 /** Shared admin list: status badge, reorder, publish toggle, edit, delete. */
@@ -47,15 +48,17 @@ export function ItemList({
                     <p className="mt-0.5 text-sm text-muted">{item.subtitle}</p>
                   )}
                 </div>
-                <span
-                  className={
-                    item.published
-                      ? "rounded-full border border-emerald-500/40 px-2.5 py-0.5 text-xs text-emerald-400"
-                      : "rounded-full border border-amber-500/40 px-2.5 py-0.5 text-xs text-amber-400"
-                  }
-                >
-                  {item.published ? "Published" : "Draft"}
-                </span>
+                {item.published !== undefined && (
+                  <span
+                    className={
+                      item.published
+                        ? "rounded-full border border-emerald-500/40 px-2.5 py-0.5 text-xs text-emerald-400"
+                        : "rounded-full border border-amber-500/40 px-2.5 py-0.5 text-xs text-amber-400"
+                    }
+                  >
+                    {item.published ? "Published" : "Draft"}
+                  </span>
+                )}
               </div>
               <div className="mt-4">
                 <RowActions
