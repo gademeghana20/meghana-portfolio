@@ -1,0 +1,77 @@
+import Link from "next/link";
+import { Plus } from "lucide-react";
+import { RowActions } from "./RowActions";
+
+export interface ListItem {
+  id: string;
+  title: string;
+  subtitle?: string;
+  published: boolean;
+}
+
+/** Shared admin list: status badge, reorder, publish toggle, edit, delete. */
+export function ItemList({
+  table,
+  basePath,
+  items,
+  addLabel,
+  emptyText,
+}: {
+  table: string;
+  basePath: string;
+  items: ListItem[];
+  addLabel: string;
+  emptyText: string;
+}) {
+  return (
+    <div>
+      <Link
+        href={`${basePath}/new`}
+        className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-[#0c0e13] hover:bg-[#9aabff]"
+      >
+        <Plus size={16} aria-hidden="true" /> {addLabel}
+      </Link>
+
+      {items.length === 0 ? (
+        <p className="mt-6 rounded-xl border border-dashed border-border p-6 text-muted">
+          {emptyText}
+        </p>
+      ) : (
+        <ul className="mt-6 space-y-3">
+          {items.map((item, i) => (
+            <li key={item.id} className="rounded-xl border border-border bg-surface p-5">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="font-medium">{item.title}</p>
+                  {item.subtitle && (
+                    <p className="mt-0.5 text-sm text-muted">{item.subtitle}</p>
+                  )}
+                </div>
+                <span
+                  className={
+                    item.published
+                      ? "rounded-full border border-emerald-500/40 px-2.5 py-0.5 text-xs text-emerald-400"
+                      : "rounded-full border border-amber-500/40 px-2.5 py-0.5 text-xs text-amber-400"
+                  }
+                >
+                  {item.published ? "Published" : "Draft"}
+                </span>
+              </div>
+              <div className="mt-4">
+                <RowActions
+                  table={table}
+                  id={item.id}
+                  title={item.title}
+                  published={item.published}
+                  editHref={`${basePath}/${item.id}`}
+                  isFirst={i === 0}
+                  isLast={i === items.length - 1}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}

@@ -8,8 +8,8 @@ export interface AdminNavItem {
 export const adminNav: AdminNavItem[] = [
   { href: "/admin", label: "Overview", ready: true },
   { href: "/admin/about", label: "About Me", ready: true },
-  { href: "/admin/experience", label: "Experience", ready: false },
-  { href: "/admin/education", label: "Education", ready: false },
+  { href: "/admin/experience", label: "Experience", ready: true },
+  { href: "/admin/education", label: "Education", ready: true },
   { href: "/admin/skills", label: "Skills", ready: false },
   { href: "/admin/projects", label: "Projects", ready: false },
   { href: "/admin/certifications", label: "Certifications", ready: false },

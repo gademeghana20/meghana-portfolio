@@ -14,13 +14,20 @@ type Props = {
   action: (prev: ActionState, formData: FormData) => Promise<ActionState>;
   children: ReactNode;
   submitLabel?: string;
+  /** Extra submit buttons; the clicked one is sent as the "intent" field. */
+  intents?: { value: string; label: string; primary?: boolean }[];
 };
 
 /**
  * Wraps an admin edit form: shows success/error messages, per-field errors,
  * and warns before leaving the page with unsaved changes.
  */
-export function AdminForm({ action, children, submitLabel = "Save changes" }: Props) {
+export function AdminForm({
+  action,
+  children,
+  submitLabel = "Save changes",
+  intents,
+}: Props) {
   const [state, dispatch, pending] = useActionState(action, idle);
   const [dirty, setDirty] = useState(false);
   const [seen, setSeen] = useState(state);
@@ -44,7 +51,8 @@ export function AdminForm({ action, children, submitLabel = "Save changes" }: Pr
       onChange={() => setDirty(true)}
       onSubmit={(e) => {
         e.preventDefault(); // keeps typed values on screen after saving
-        const data = new FormData(e.currentTarget);
+        const submitter = (e.nativeEvent as SubmitEvent).submitter;
+        const data = new FormData(e.currentTarget, submitter);
         setDirty(false);
         startTransition(() => dispatch(data));
       }}
@@ -55,13 +63,22 @@ export function AdminForm({ action, children, submitLabel = "Save changes" }: Pr
       </FieldErrorsContext>
 
       <div className="flex flex-wrap items-center gap-4">
-        <button
-          type="submit"
-          disabled={pending}
-          className="rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-[#0c0e13] transition-colors hover:bg-[#9aabff] disabled:opacity-60"
-        >
-          {pending ? "Saving…" : submitLabel}
-        </button>
+        {(intents ?? [{ value: "save", label: submitLabel, primary: true }]).map((i) => (
+          <button
+            key={i.value}
+            type="submit"
+            name="intent"
+            value={i.value}
+            disabled={pending}
+            className={
+              i.primary
+                ? "rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-[#0c0e13] transition-colors hover:bg-[#9aabff] disabled:opacity-60"
+                : "rounded-lg border border-border px-5 py-2.5 text-sm font-medium transition-colors hover:border-accent hover:text-accent disabled:opacity-60"
+            }
+          >
+            {pending ? "Saving…" : i.label}
+          </button>
+        ))}
         {dirty && !pending && (
           <span className="text-sm text-amber-400">Unsaved changes</span>
         )}
