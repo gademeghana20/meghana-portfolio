@@ -12,8 +12,8 @@ export const adminNav: AdminNavItem[] = [
   { href: "/admin/education", label: "Education", ready: true },
   { href: "/admin/skills", label: "Skills", ready: true },
   { href: "/admin/projects", label: "Projects", ready: true },
-  { href: "/admin/certifications", label: "Certifications", ready: false },
-  { href: "/admin/resume", label: "Resume", ready: false },
+  { href: "/admin/certifications", label: "Certifications", ready: true },
+  { href: "/admin/resume", label: "Resume", ready: true },
   { href: "/admin/social", label: "Social Links", ready: true },
   { href: "/admin/contact", label: "Contact", ready: true },
 ];

@@ -49,6 +49,8 @@ export function Navbar({
             <li>
               <a
                 href={resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-sm hover:border-accent hover:text-accent"
               >
                 <Download size={14} aria-hidden="true" /> Resume
@@ -87,6 +89,8 @@ export function Navbar({
               <li>
                 <a
                   href={resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={close}
                   className="flex items-center gap-2 py-3 text-accent"
                 >

@@ -72,7 +72,14 @@ export function ButtonLink({
       </a>
     );
   }
-  if (href.startsWith("#") || href.endsWith(".pdf")) {
+  if (href.endsWith(".pdf")) {
+    return (
+      <a href={href} className={styles} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    );
+  }
+  if (href.startsWith("#")) {
     return (
       <a href={href} className={styles}>
         {children}
