@@ -2,6 +2,10 @@ import { Suspense, type ReactNode } from "react";
 import { requireAdmin } from "@/features/auth/dal";
 import { Sidebar } from "@/features/dashboard/Sidebar";
 
+// The admin area is private and always request-time, so instant-navigation
+// prerendering (meant for public pages) is switched off here.
+export const instant = false;
+
 // Reading the session happens at request time, so it sits behind Suspense.
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (

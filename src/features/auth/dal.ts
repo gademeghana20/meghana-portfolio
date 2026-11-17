@@ -1,5 +1,6 @@
 import "server-only";
 import { cache } from "react";
+import { connection } from "next/server";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
@@ -9,6 +10,9 @@ import { createClient } from "@/lib/supabase/server";
  * then confirms the user is on the admin allow-list (public.is_admin()).
  */
 export const requireAdmin = cache(async () => {
+  // Auth is always evaluated per request, never prerendered. This also lets the
+  // session library read the current time without tripping prerender checks.
+  await connection();
   const supabase = await createClient();
   const {
     data: { user },
