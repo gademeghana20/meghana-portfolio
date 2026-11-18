@@ -1,9 +1,9 @@
-import Image from "next/image";
 import { requireAdmin } from "@/features/auth/dal";
 import { PageHeader } from "@/features/dashboard/PageHeader";
 import { AdminForm } from "@/features/portfolio-management/AdminForm";
 import { saveAbout } from "@/features/portfolio-management/profile/actions";
-import { CheckboxField, FileField, TextAreaField, TextField } from "@/components/ui/form";
+import { PhotoField } from "@/features/portfolio-management/profile/PhotoField";
+import { TextAreaField, TextField } from "@/components/ui/form";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function AboutAdminPage() {
@@ -23,27 +23,14 @@ export default async function AboutAdminPage() {
         description="Your name, headline, introduction, summary and photo. Saving updates your public site right away."
       />
       <AdminForm action={saveAbout}>
-        <div className="space-y-3">
-          {photoUrl && (
-            <div>
-              <p className="mb-2 text-sm font-medium">Current photo</p>
-              <Image
-                src={photoUrl}
-                alt="Your current profile photo"
-                width={150}
-                height={200}
-                className="h-[200px] w-[150px] rounded-t-full rounded-b-2xl border border-border object-cover object-[50%_20%]"
-              />
-            </div>
-          )}
-          <FileField
-            name="photo"
-            label={photoUrl ? "Replace photo" : "Profile photo"}
-            hint="PNG, JPG or WebP, up to 4 MB. A portrait (taller than wide) with your face in the upper half works best. It is cropped into an arch shape."
-            accept="image/png,image/jpeg,image/webp"
-          />
-          {photoUrl && <CheckboxField name="remove_photo" label="Remove the current photo" />}
-        </div>
+        <PhotoField
+          currentUrl={photoUrl}
+          crop={{
+            zoom: Number(p.photo_zoom ?? 1),
+            x: Number(p.photo_x ?? 50),
+            y: Number(p.photo_y ?? 20),
+          }}
+        />
 
         <TextField name="name" label="Name" defaultValue={p.name} required />
         <TextField

@@ -8,6 +8,7 @@ export interface Profile {
   summary: string[];
   careerInterests: string;
   photoUrl: string | null;
+  photoCrop: { zoom: number; x: number; y: number };
 }
 
 export interface SocialLinks {

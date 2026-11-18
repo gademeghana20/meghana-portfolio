@@ -76,6 +76,11 @@ export async function getPortfolioContent(): Promise<PortfolioContent> {
       summary: profile.data!.summary,
       careerInterests: profile.data!.career_interests,
       photoUrl: publicUrl("project-images", profile.data!.photo_path),
+      photoCrop: {
+        zoom: Number(profile.data!.photo_zoom ?? 1),
+        x: Number(profile.data!.photo_x ?? 50),
+        y: Number(profile.data!.photo_y ?? 20),
+      },
     },
     social,
     resumeUrl: publicUrl("resume", settings.data!.resume_path),

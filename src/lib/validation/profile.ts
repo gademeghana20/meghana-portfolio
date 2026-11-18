@@ -14,6 +14,10 @@ export const aboutSchema = z.object({
   intro: text("Introduction", 500),
   summary: text("Professional summary", 4000),
   career_interests: z.string().trim().max(500, "Keep it under 500 characters."),
+  // Photo framing. Out-of-range or missing values fall back to safe defaults.
+  photo_zoom: z.coerce.number().min(1).max(3).catch(1),
+  photo_x: z.coerce.number().min(0).max(100).catch(50),
+  photo_y: z.coerce.number().min(0).max(100).catch(20),
 });
 
 export const contactSchema = z.object({

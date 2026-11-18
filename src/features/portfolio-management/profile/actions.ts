@@ -64,6 +64,14 @@ export async function saveAbout(
     .select("id");
   if (error || data?.length !== 1) {
     await removeFile(db, PHOTO_BUCKET, newPath); // don't leave an orphan upload
+    // PostgREST reports an unknown column this way: the photo-crop SQL isn't applied yet.
+    if (error?.code === "PGRST204") {
+      return {
+        status: "error",
+        message:
+          "The database needs a one-time update for photo framing. Run supabase/migrations/0003_photo_crop.sql in the Supabase SQL Editor, then save again.",
+      };
+    }
     return saveFailed;
   }
 

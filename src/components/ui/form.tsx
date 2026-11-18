@@ -6,6 +6,9 @@ import { cn } from "@/lib/utilities/cn";
 /** Field error messages, provided by AdminForm after a failed save. */
 export const FieldErrorsContext = createContext<Record<string, string>>({});
 
+/** Lets custom controls (e.g. the photo cropper) flag "unsaved changes". */
+export const MarkDirtyContext = createContext<() => void>(() => {});
+
 const control =
   "mt-1.5 w-full rounded-lg border bg-background px-3.5 py-2.5 text-sm outline-none focus:border-accent";
 

@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { FieldErrorsContext } from "@/components/ui/form";
+import { FieldErrorsContext, MarkDirtyContext } from "@/components/ui/form";
 import { idle, type ActionState } from "./types";
 
 type Props = {
@@ -58,9 +58,11 @@ export function AdminForm({
       }}
       className="space-y-6"
     >
-      <FieldErrorsContext value={state.fieldErrors ?? {}}>
-        {children}
-      </FieldErrorsContext>
+      <MarkDirtyContext value={() => setDirty(true)}>
+        <FieldErrorsContext value={state.fieldErrors ?? {}}>
+          {children}
+        </FieldErrorsContext>
+      </MarkDirtyContext>
 
       <div className="flex flex-wrap items-center gap-4">
         {(intents ?? [{ value: "save", label: submitLabel, primary: true }]).map((i) => (
