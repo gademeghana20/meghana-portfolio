@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 
 // Runs before the first paint so the saved (or system) theme applies with no
 // flash of the wrong colors.
-const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()`;
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}document.documentElement.classList.add("js")})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

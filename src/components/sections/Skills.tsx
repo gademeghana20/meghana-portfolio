@@ -8,6 +8,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { SkillCategory, SkillLevel } from "@/types/portfolio";
+import { Reveal } from "@/components/ui/Reveal";
+import { stagger } from "@/lib/utilities/stagger";
 import { Container, SectionHeading } from "@/components/ui/primitives";
 import { cn } from "@/lib/utilities/cn";
 
@@ -50,25 +52,27 @@ export function Skills({ categories }: { categories: SkillCategory[] }) {
         </ul>
 
         <div className="grid gap-5 md:grid-cols-2">
-          {categories.map((c) => {
+          {categories.map((c, i) => {
             const Icon = icons[c.icon];
             return (
-              <div key={c.id} className="rounded-2xl border border-border bg-surface shadow-card p-6">
-                <h3 className="flex items-center gap-2.5 font-medium">
-                  <Icon size={18} className="text-accent" aria-hidden="true" />
-                  {c.title}
-                </h3>
-                <ul className="mt-4 flex flex-wrap gap-2">
-                  {c.skills.map((s) => (
-                    <li
-                      key={s.name}
-                      className={cn("rounded-md border px-2.5 py-1 text-sm", levelStyle[s.level])}
-                    >
-                      {s.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <Reveal key={c.id} delay={stagger(i % 2)} className="h-full">
+                <div className="lift h-full rounded-2xl border border-border bg-surface shadow-card p-6">
+                  <h3 className="flex items-center gap-2.5 font-medium">
+                    <Icon size={18} className="text-accent" aria-hidden="true" />
+                    {c.title}
+                  </h3>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {c.skills.map((s) => (
+                      <li
+                        key={s.name}
+                        className={cn("chip rounded-md border px-2.5 py-1 text-sm", levelStyle[s.level])}
+                      >
+                        {s.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
             );
           })}
         </div>

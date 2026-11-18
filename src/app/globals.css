@@ -121,6 +121,166 @@ section[id] {
   scroll-margin-top: 5rem;
 }
 
+/* ---------------------------------------------------------------------------
+ * Motion. Only opacity/transform are animated for smoothness, and everything
+ * is switched off for visitors who prefer reduced motion (see bottom).
+ * ------------------------------------------------------------------------- */
+@layer base {
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      opacity 0.2s ease,
+      transform 0.15s ease;
+  }
+
+  /* Press feedback on every button. */
+  button:not(:disabled):active {
+    transform: scale(0.97);
+  }
+
+  /* Soft glow when a field is selected. */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    outline: none;
+  }
+}
+
+:root {
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --shadow-hover:
+    0 2px 4px rgb(74 45 40 / 0.06), 0 18px 34px -14px rgb(74 45 40 / 0.3);
+}
+
+:root[data-theme="dark"] {
+  --shadow-hover:
+    0 2px 4px rgb(0 0 0 / 0.35), 0 18px 34px -14px rgb(0 0 0 / 0.65);
+}
+
+/* Fade/slide in when scrolled into view (class added by <Reveal>). Content is
+ * only hidden once JavaScript has marked <html class="js">, so nothing is ever
+ * invisible without it. */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+}
+html.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Page-load entrance for the hero. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.8s var(--ease-out) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* Cards: gentle lift on hover. */
+.lift {
+  transition:
+    transform 0.3s var(--ease-out),
+    box-shadow 0.3s ease,
+    border-color 0.25s ease,
+    background-color 0.2s ease;
+}
+@media (hover: hover) {
+  .lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  }
+}
+
+/* Small chips (skills, tags). */
+.chip {
+  transition:
+    transform 0.2s var(--ease-out),
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+@media (hover: hover) {
+  .chip:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+}
+
+/* Underline that draws itself under links. */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  padding-bottom: 2px;
+  transition:
+    background-size 0.3s var(--ease-out),
+    color 0.2s ease;
+}
+.link-underline:hover,
+.link-underline[aria-current="true"] {
+  background-size: 100% 1px;
+}
+
+/* While the theme is being switched, fade every color instead of snapping. */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    fill 0.35s ease,
+    stroke 0.35s ease,
+    box-shadow 0.35s ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .rise {
+    animation: none;
+  }
+  .lift,
+  .lift:hover,
+  .chip,
+  .chip:hover {
+    transform: none;
+    transition: none;
+  }
+  button:not(:disabled):active {
+    transform: none;
+  }
+  html.theme-switching *,
+  html.theme-switching *::before,
+  html.theme-switching *::after {
+    transition: none !important;
+  }
+}
+
 ::selection {
   background: var(--peach-soft);
 }

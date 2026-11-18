@@ -1,5 +1,7 @@
 import type { Project } from "@/types/portfolio";
 import { ProjectCard } from "@/components/projects/ProjectCard";
+import { Reveal } from "@/components/ui/Reveal";
+import { stagger } from "@/lib/utilities/stagger";
 import { Container, SectionHeading } from "@/components/ui/primitives";
 
 export function Projects({ projects }: { projects: Project[] }) {
@@ -8,8 +10,10 @@ export function Projects({ projects }: { projects: Project[] }) {
       <Container>
         <SectionHeading eyebrow="Projects" title="Selected projects" />
         <div className="grid gap-6 md:grid-cols-2">
-          {projects.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
+          {projects.map((p, i) => (
+            <Reveal key={p.slug} delay={stagger(i % 2)} className="h-full">
+              <ProjectCard project={p} />
+            </Reveal>
           ))}
         </div>
       </Container>

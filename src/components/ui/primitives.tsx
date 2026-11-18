@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utilities/cn";
+import { Reveal } from "./Reveal";
 
 export function Container({
   children,
@@ -24,19 +25,19 @@ export function SectionHeading({
   title: string;
 }) {
   return (
-    <div className="mb-10">
+    <Reveal className="mb-10">
       <p className="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.22em] text-accent">
         <span aria-hidden="true" className="h-px w-8 bg-accent/60" />
         {eyebrow}
       </p>
       <h2 className="mt-3 text-3xl sm:text-4xl">{title}</h2>
-    </div>
+    </Reveal>
   );
 }
 
 export function Tag({ children }: { children: ReactNode }) {
   return (
-    <span className="rounded-full border border-border bg-surface-2 px-3 py-1 text-xs text-muted">
+    <span className="chip inline-block rounded-full border border-border bg-surface-2 px-3 py-1 text-xs text-muted">
       {children}
     </span>
   );

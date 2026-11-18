@@ -1,4 +1,6 @@
 import type { Profile } from "@/types/portfolio";
+import { Reveal } from "@/components/ui/Reveal";
+import { stagger } from "@/lib/utilities/stagger";
 import { Container, SectionHeading } from "@/components/ui/primitives";
 
 export function About({ profile }: { profile: Profile }) {
@@ -7,13 +9,17 @@ export function About({ profile }: { profile: Profile }) {
       <Container>
         <SectionHeading eyebrow="About" title="A bit about me" />
         <div className="max-w-3xl space-y-5 text-lg leading-relaxed text-muted">
-          {profile.summary.map((p) => (
-            <p key={p}>{p}</p>
+          {profile.summary.map((p, i) => (
+            <Reveal key={p} delay={stagger(i)}>
+              <p>{p}</p>
+            </Reveal>
           ))}
-          <p className="border-l-2 border-accent pl-4 text-base text-foreground">
-            <span className="text-muted">Career interests: </span>
-            {profile.careerInterests}
-          </p>
+          <Reveal delay={stagger(profile.summary.length)}>
+            <p className="border-l-2 border-accent pl-4 text-base text-foreground">
+              <span className="text-muted">Career interests: </span>
+              {profile.careerInterests}
+            </p>
+          </Reveal>
         </div>
       </Container>
     </section>

@@ -13,7 +13,7 @@ export const statusLabel: Record<ProjectStatus, string> = {
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="flex flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-card transition-colors hover:border-accent/50">
+    <article className="lift flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-card">
       {project.imageUrl ? (
         <div className="relative h-40 border-b border-border bg-surface-2">
           <Image
@@ -51,9 +51,14 @@ export function ProjectCard({ project }: { project: Project }) {
         <div className="mt-6 flex flex-wrap items-center gap-4 pt-2 text-sm">
           <Link
             href={`/projects/${project.slug}`}
-            className="inline-flex items-center gap-1.5 font-medium text-accent hover:underline"
+            className="group inline-flex items-center gap-1.5 font-medium text-accent"
           >
-            View details <ArrowRight size={14} aria-hidden="true" />
+            <span className="link-underline">View details</span>
+            <ArrowRight
+              size={14}
+              aria-hidden="true"
+              className="transition-transform duration-300 group-hover:translate-x-1"
+            />
           </Link>
           {project.githubUrl && (
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted hover:text-foreground">

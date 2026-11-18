@@ -1,5 +1,7 @@
 import { GraduationCap } from "lucide-react";
 import type { Education as EducationItem } from "@/types/portfolio";
+import { Reveal } from "@/components/ui/Reveal";
+import { stagger } from "@/lib/utilities/stagger";
 import { Container, SectionHeading } from "@/components/ui/primitives";
 
 export function Education({ items }: { items: EducationItem[] }) {
@@ -8,11 +10,9 @@ export function Education({ items }: { items: EducationItem[] }) {
       <Container>
         <SectionHeading eyebrow="Education" title="Academic background" />
         <div className="space-y-4">
-          {items.map((e) => (
-            <div
-              key={e.id}
-              className="flex gap-5 rounded-2xl border border-border bg-surface shadow-card p-6"
-            >
+          {items.map((e, i) => (
+            <Reveal key={e.id} delay={stagger(i)}>
+            <div className="lift flex gap-5 rounded-2xl border border-border bg-surface shadow-card p-6">
               <GraduationCap className="mt-1 shrink-0 text-accent" size={24} aria-hidden="true" />
               <div>
                 <h3 className="text-lg font-semibold">{e.degree}</h3>
@@ -24,6 +24,7 @@ export function Education({ items }: { items: EducationItem[] }) {
                 {e.notes && <p className="mt-3 text-muted">{e.notes}</p>}
               </div>
             </div>
+            </Reveal>
           ))}
         </div>
       </Container>

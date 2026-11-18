@@ -10,7 +10,10 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
   const toggle = () => {
     const root = document.documentElement;
     const next = root.dataset.theme === "dark" ? "light" : "dark";
+    // Briefly enable color fading so the switch is smooth, not a snap.
+    root.classList.add("theme-switching");
     root.dataset.theme = next;
+    window.setTimeout(() => root.classList.remove("theme-switching"), 400);
     try {
       localStorage.setItem("theme", next);
     } catch {
