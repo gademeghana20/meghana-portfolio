@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LogOut } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { logout } from "@/features/auth/actions";
 import { adminNav } from "./nav";
 
@@ -39,9 +40,12 @@ export function Sidebar({ email }: { email: string }) {
       </nav>
 
       <div className="flex items-center justify-between gap-2 border-t border-border p-3">
-        <Link href="/" target="_blank" className="px-3 text-sm text-muted hover:text-accent">
-          View site
-        </Link>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Link href="/" target="_blank" className="px-2 text-sm text-muted hover:text-accent">
+            View site
+          </Link>
+        </div>
         <form action={logout}>
           <button
             type="submit"

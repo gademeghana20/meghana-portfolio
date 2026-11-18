@@ -72,7 +72,7 @@ export function AdminForm({
             disabled={pending}
             className={
               i.primary
-                ? "rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-[#0c0e13] transition-colors hover:bg-[#9aabff] disabled:opacity-60"
+                ? "rounded-lg bg-accent-fill px-5 py-2.5 text-sm font-medium text-on-accent transition-colors hover:bg-accent-fill-hover disabled:opacity-60"
                 : "rounded-lg border border-border px-5 py-2.5 text-sm font-medium transition-colors hover:border-accent hover:text-accent disabled:opacity-60"
             }
           >
@@ -80,13 +80,13 @@ export function AdminForm({
           </button>
         ))}
         {dirty && !pending && (
-          <span className="text-sm text-amber-400">Unsaved changes</span>
+          <span className="text-sm text-warning">Unsaved changes</span>
         )}
         {state.status !== "idle" && !pending && (
           <p
             role={state.status === "error" ? "alert" : "status"}
             className={
-              state.status === "success" ? "text-sm text-emerald-400" : "text-sm text-red-400"
+              state.status === "success" ? "text-sm text-success" : "text-sm text-danger"
             }
           >
             {state.message}

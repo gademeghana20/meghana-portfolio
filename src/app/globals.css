@@ -1,16 +1,64 @@
 @import "tailwindcss";
 
-/* Design tokens: charcoal surfaces, one blue accent with a subtle violet pair. */
+/* Dark mode is switched by the data-theme attribute on <html>. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/*
+ * Earth-tone palette:
+ *   brick #A26360  rose #D4A29C  peach #E8B298
+ *   butter #EDCC8B  mint #BDD1C5  sage #9BAAA2
+ * Every text/background pair below meets WCAG AA contrast (4.5:1+).
+ */
 :root {
-  --background: #0c0e13;
-  --surface: #13161d;
-  --surface-2: #1a1e27;
-  --border: #252a35;
-  --foreground: #e8eaf0;
-  --muted: #9aa1b2;
-  --accent: #7c93ff;
-  --accent-2: #a58bff;
-  --accent-soft: rgb(124 147 255 / 0.12);
+  --background: #faf4ee;
+  --surface: #fffcf9;
+  --surface-2: #f4e9e0;
+  --border: #e8d8cc;
+  --foreground: #2f2321;
+  --muted: #75605b;
+
+  --accent: #8a4c49; /* text, links, highlights */
+  --accent-fill: #a26360; /* filled buttons */
+  --accent-fill-hover: #8e5350;
+  --on-accent: #ffffff; /* text on filled accent */
+  --accent-soft: rgb(162 99 96 / 0.12);
+
+  --rose-soft: rgb(212 162 156 / 0.32);
+  --peach-soft: rgb(232 178 152 / 0.3);
+  --sun-soft: rgb(237 204 139 / 0.42);
+  --sage-soft: rgb(155 170 162 / 0.26);
+
+  --danger: #b3362f;
+  --success: #3f7a5a;
+  --warning: #8f6414;
+
+  --shadow: 0 1px 2px rgb(74 45 40 / 0.05), 0 8px 24px -12px rgb(74 45 40 / 0.18);
+}
+
+:root[data-theme="dark"] {
+  --background: #1b1513;
+  --surface: #251d1a;
+  --surface-2: #2f2522;
+  --border: #41332e;
+  --foreground: #f4e7de;
+  --muted: #b9a69c;
+
+  --accent: #e8b298;
+  --accent-fill: #d4a29c;
+  --accent-fill-hover: #e8b298;
+  --on-accent: #2a1b19;
+  --accent-soft: rgb(232 178 152 / 0.14);
+
+  --rose-soft: rgb(212 162 156 / 0.2);
+  --peach-soft: rgb(232 178 152 / 0.16);
+  --sun-soft: rgb(237 204 139 / 0.16);
+  --sage-soft: rgb(189 209 197 / 0.14);
+
+  --danger: #f0877f;
+  --success: #8fcdaa;
+  --warning: #edcc8b;
+
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.5);
 }
 
 @theme inline {
@@ -21,14 +69,29 @@
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
-  --color-accent-2: var(--accent-2);
+  --color-accent-fill: var(--accent-fill);
+  --color-accent-fill-hover: var(--accent-fill-hover);
+  --color-on-accent: var(--on-accent);
   --color-accent-soft: var(--accent-soft);
-  --font-sans: var(--font-geist-sans);
+  --color-rose-soft: var(--rose-soft);
+  --color-peach-soft: var(--peach-soft);
+  --color-sun-soft: var(--sun-soft);
+  --color-sage-soft: var(--sage-soft);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --shadow-card: var(--shadow);
+  --font-sans: var(--font-sans-body);
+  --font-display: var(--font-display-serif);
   --font-mono: var(--font-geist-mono);
 }
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
   color-scheme: dark;
 }
 
@@ -41,7 +104,17 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans-body), system-ui, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Editorial serif headings. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display-serif), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.015em;
 }
 
 section[id] {
@@ -49,7 +122,7 @@ section[id] {
 }
 
 ::selection {
-  background: var(--accent-soft);
+  background: var(--peach-soft);
 }
 
 :focus-visible {

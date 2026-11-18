@@ -19,14 +19,14 @@ export function RemoveResumeButton() {
   if (confirming) {
     return (
       <div role="alertdialog" aria-label="Remove resume" className="flex flex-wrap items-center gap-2">
-        <span className="text-sm text-red-400">
+        <span className="text-sm text-danger">
           Remove the resume? The Download Resume button will disappear from your site.
         </span>
         <button
           type="button"
           disabled={pending}
           onClick={remove}
-          className="rounded-md bg-red-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-400 disabled:opacity-50"
+          className="rounded-md bg-danger px-3 py-1.5 text-xs font-medium text-on-accent hover:opacity-90 disabled:opacity-50"
         >
           {pending ? "Removing…" : "Yes, remove"}
         </button>
@@ -46,11 +46,11 @@ export function RemoveResumeButton() {
       <button
         type="button"
         onClick={() => setConfirming(true)}
-        className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-xs hover:border-red-400 hover:text-red-400"
+        className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-xs hover:border-danger hover:text-danger"
       >
         <Trash2 size={13} aria-hidden="true" /> Remove resume
       </button>
-      {error && <span role="alert" className="text-xs text-red-400">{error}</span>}
+      {error && <span role="alert" className="text-xs text-danger">{error}</span>}
     </div>
   );
 }

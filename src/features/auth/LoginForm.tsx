@@ -40,7 +40,7 @@ export function LoginForm() {
       </div>
 
       {state.error && (
-        <p role="alert" className="text-sm text-red-400">
+        <p role="alert" className="text-sm text-danger">
           {state.error}
         </p>
       )}
@@ -48,7 +48,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-[#0c0e13] transition-colors hover:bg-[#9aabff] disabled:opacity-60"
+        className="w-full rounded-lg bg-accent-fill px-4 py-2.5 text-sm font-medium text-on-accent transition-colors hover:bg-accent-fill-hover disabled:opacity-60"
       >
         {pending ? "Signing in…" : "Sign in"}
       </button>

@@ -20,10 +20,12 @@ const icons: Record<SkillCategory["icon"], LucideIcon> = {
   wrench: Wrench,
 };
 
+// Each level has its own palette tone, so the meaning never depends on color alone:
+// solid rose = professional, butter = projects, dashed sage = familiar.
 const levelStyle: Record<SkillLevel, string> = {
-  professional: "border-accent/40 bg-accent-soft text-foreground",
-  project: "border-border bg-surface-2 text-foreground",
-  familiar: "border-border border-dashed text-muted",
+  professional: "border-accent/40 bg-rose-soft text-foreground",
+  project: "border-transparent bg-sun-soft text-foreground",
+  familiar: "border-dashed border-accent/40 bg-sage-soft text-foreground",
 };
 
 const legend: Array<[SkillLevel, string]> = [
@@ -51,7 +53,7 @@ export function Skills({ categories }: { categories: SkillCategory[] }) {
           {categories.map((c) => {
             const Icon = icons[c.icon];
             return (
-              <div key={c.id} className="rounded-xl border border-border bg-surface p-6">
+              <div key={c.id} className="rounded-2xl border border-border bg-surface shadow-card p-6">
                 <h3 className="flex items-center gap-2.5 font-medium">
                   <Icon size={18} className="text-accent" aria-hidden="true" />
                   {c.title}

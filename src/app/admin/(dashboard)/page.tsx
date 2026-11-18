@@ -33,7 +33,7 @@ export default async function AdminOverviewPage() {
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
         {counts.map((c) => (
-          <div key={c.label} className="rounded-xl border border-border bg-surface p-5">
+          <div key={c.label} className="rounded-2xl border border-border bg-surface shadow-card p-5">
             <p className="text-sm text-muted">{c.label}</p>
             <p className="mt-1 text-3xl font-semibold">{c.count}</p>
           </div>

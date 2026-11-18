@@ -9,7 +9,7 @@ export default async function AboutAdminPage() {
   await requireAdmin();
   const db = await createClient();
   const { data: p } = await db.from("profile").select("*").eq("id", 1).single();
-  if (!p) return <p className="text-red-400">Could not load your profile.</p>;
+  if (!p) return <p className="text-danger">Could not load your profile.</p>;
 
   return (
     <div className="max-w-2xl">

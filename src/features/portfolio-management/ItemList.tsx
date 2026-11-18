@@ -28,7 +28,7 @@ export function ItemList({
     <div>
       <Link
         href={`${basePath}/new`}
-        className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-[#0c0e13] hover:bg-[#9aabff]"
+        className="inline-flex items-center gap-2 rounded-lg bg-accent-fill px-4 py-2.5 text-sm font-medium text-on-accent hover:bg-accent-fill-hover"
       >
         <Plus size={16} aria-hidden="true" /> {addLabel}
       </Link>
@@ -40,7 +40,7 @@ export function ItemList({
       ) : (
         <ul className="mt-6 space-y-3">
           {items.map((item, i) => (
-            <li key={item.id} className="rounded-xl border border-border bg-surface p-5">
+            <li key={item.id} className="rounded-2xl border border-border bg-surface shadow-card p-5">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="font-medium">{item.title}</p>
@@ -52,8 +52,8 @@ export function ItemList({
                   <span
                     className={
                       item.published
-                        ? "rounded-full border border-emerald-500/40 px-2.5 py-0.5 text-xs text-emerald-400"
-                        : "rounded-full border border-amber-500/40 px-2.5 py-0.5 text-xs text-amber-400"
+                        ? "rounded-full border border-success/40 px-2.5 py-0.5 text-xs text-success"
+                        : "rounded-full border border-warning/40 px-2.5 py-0.5 text-xs text-warning"
                     }
                   >
                     {item.published ? "Published" : "Draft"}

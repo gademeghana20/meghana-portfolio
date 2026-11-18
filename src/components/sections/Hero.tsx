@@ -18,12 +18,17 @@ export function Hero({
     .join("")
     .slice(0, 2);
 
+  const iconLink =
+    "inline-flex size-10 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-accent hover:text-accent";
+
   return (
-    <section id="home" className="relative">
-      <Container className="grid items-center gap-12 py-20 sm:py-28 md:grid-cols-[1fr_auto]">
+    <section id="home" className="relative overflow-hidden">
+      <Container className="grid items-center gap-14 py-16 sm:py-24 md:grid-cols-[1.6fr_1fr]">
         <div>
-          <p className="font-mono text-sm text-accent">{profile.designation}</p>
-          <h1 className="mt-4 text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+          <p className="inline-block rounded-full bg-peach-soft px-4 py-1.5 text-xs font-medium tracking-wide text-accent">
+            {profile.designation}
+          </p>
+          <h1 className="mt-6 text-4xl leading-[1.1] sm:text-5xl lg:text-[3.4rem]">
             {profile.headline}
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
@@ -44,26 +49,27 @@ export function Hero({
             </ButtonLink>
           </div>
 
-          <div className="mt-8 flex items-center gap-4 text-muted">
+          <div className="mt-8 flex items-center gap-3">
             {social.github && (
-              <a href={social.github} aria-label="GitHub profile" className="hover:text-accent" target="_blank" rel="noopener noreferrer">
-                <GithubIcon className="size-6" />
+              <a href={social.github} aria-label="GitHub profile" className={iconLink} target="_blank" rel="noopener noreferrer">
+                <GithubIcon className="size-5" />
               </a>
             )}
             {social.linkedin && (
-              <a href={social.linkedin} aria-label="LinkedIn profile" className="hover:text-accent" target="_blank" rel="noopener noreferrer">
-                <LinkedinIcon className="size-6" />
+              <a href={social.linkedin} aria-label="LinkedIn profile" className={iconLink} target="_blank" rel="noopener noreferrer">
+                <LinkedinIcon className="size-5" />
               </a>
             )}
           </div>
         </div>
 
-        {/* Photo placeholder: replaced by an uploaded photo from the admin later. */}
-        <div
-          aria-hidden="true"
-          className="hidden size-56 items-center justify-center rounded-full border border-border bg-surface text-6xl font-semibold text-accent md:flex"
-        >
-          {initials}
+        {/* Photo placeholder: layered earth-tone arch until a photo is added. */}
+        <div aria-hidden="true" className="relative mx-auto hidden w-64 md:block lg:w-72">
+          <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-t-full rounded-b-[2rem] bg-sage-soft" />
+          <div className="absolute inset-0 -translate-x-2 translate-y-2 rounded-t-full rounded-b-[2rem] bg-sun-soft" />
+          <div className="relative flex aspect-[3/4] items-center justify-center rounded-t-full rounded-b-[2rem] border border-border bg-rose-soft">
+            <span className="font-display text-7xl text-accent">{initials}</span>
+          </div>
         </div>
       </Container>
     </section>

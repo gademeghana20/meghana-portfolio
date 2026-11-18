@@ -25,19 +25,18 @@ export function SectionHeading({
 }) {
   return (
     <div className="mb-10">
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+      <p className="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.22em] text-accent">
+        <span aria-hidden="true" className="h-px w-8 bg-accent/60" />
         {eyebrow}
       </p>
-      <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
-        {title}
-      </h2>
+      <h2 className="mt-3 text-3xl sm:text-4xl">{title}</h2>
     </div>
   );
 }
 
 export function Tag({ children }: { children: ReactNode }) {
   return (
-    <span className="rounded-md border border-border bg-surface-2 px-2.5 py-1 text-xs text-muted">
+    <span className="rounded-full border border-border bg-surface-2 px-3 py-1 text-xs text-muted">
       {children}
     </span>
   );
@@ -59,9 +58,9 @@ export function ButtonLink({
   className,
 }: ButtonProps) {
   const styles = cn(
-    "inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition-colors",
+    "inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium transition-colors",
     variant === "primary"
-      ? "bg-accent text-[#0c0e13] hover:bg-[#9aabff]"
+      ? "bg-accent-fill text-on-accent hover:bg-accent-fill-hover"
       : "border border-border bg-surface text-foreground hover:border-accent hover:text-accent",
     className,
   );

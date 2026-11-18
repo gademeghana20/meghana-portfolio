@@ -36,12 +36,12 @@ export function RowActions({ table, id, title, published, editHref, isFirst, isL
   if (confirming) {
     return (
       <div role="alertdialog" aria-label={`Delete ${title}`} className="flex flex-wrap items-center gap-2">
-        <span className="text-sm text-red-400">Delete &ldquo;{title}&rdquo; permanently?</span>
+        <span className="text-sm text-danger">Delete &ldquo;{title}&rdquo; permanently?</span>
         <button
           type="button"
           disabled={pending}
           onClick={() => run(() => deleteItem(table, id))}
-          className="rounded-md bg-red-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-400 disabled:opacity-50"
+          className="rounded-md bg-danger px-3 py-1.5 text-xs font-medium text-on-accent hover:opacity-90 disabled:opacity-50"
         >
           {pending ? "Deleting…" : "Yes, delete"}
         </button>
@@ -90,11 +90,11 @@ export function RowActions({ table, id, title, published, editHref, isFirst, isL
         type="button"
         disabled={pending}
         onClick={() => setConfirming(true)}
-        className={`${btn} hover:!border-red-400 hover:!text-red-400`}
+        className={`${btn} hover:!border-danger hover:!text-danger`}
       >
         <Trash2 size={13} aria-hidden="true" /> Delete
       </button>
-      {error && <span role="alert" className="text-xs text-red-400">{error}</span>}
+      {error && <span role="alert" className="text-xs text-danger">{error}</span>}
     </div>
   );
 }

@@ -5,7 +5,7 @@ import { Container, SectionHeading } from "@/components/ui/primitives";
 
 export function Contact({ social }: { social: SocialLinks }) {
   const card =
-    "flex items-center gap-4 rounded-xl border border-border bg-surface p-5 transition-colors hover:border-accent/50";
+    "flex items-center gap-4 rounded-2xl border border-border bg-surface shadow-card p-5 transition-colors hover:border-accent/50";
 
   return (
     <section id="contact" className="py-16">

@@ -27,7 +27,7 @@ export default async function ResumeAdminPage() {
         description="Upload your resume as a PDF. The Download Resume buttons on your site always point to the latest file, and uploading a new one replaces the old one."
       />
 
-      <div className="mb-8 rounded-xl border border-border bg-surface p-5">
+      <div className="mb-8 rounded-2xl border border-border bg-surface shadow-card p-5">
         {url ? (
           <div className="space-y-4">
             <div className="flex items-center gap-3">

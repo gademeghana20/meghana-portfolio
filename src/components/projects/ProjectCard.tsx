@@ -13,7 +13,7 @@ export const statusLabel: Record<ProjectStatus, string> = {
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="flex flex-col overflow-hidden rounded-xl border border-border bg-surface transition-colors hover:border-accent/50">
+    <article className="flex flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-card transition-colors hover:border-accent/50">
       {project.imageUrl ? (
         <div className="relative h-40 border-b border-border bg-surface-2">
           <Image
@@ -27,7 +27,7 @@ export function ProjectCard({ project }: { project: Project }) {
       ) : (
         <div
           aria-hidden="true"
-          className="flex h-40 items-center justify-center border-b border-border bg-surface-2 font-mono text-sm text-muted"
+          className="flex h-40 items-center justify-center border-b border-border bg-sage-soft font-mono text-sm text-muted"
         >
           Screenshot coming soon
         </div>

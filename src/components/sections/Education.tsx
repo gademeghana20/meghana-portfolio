@@ -11,7 +11,7 @@ export function Education({ items }: { items: EducationItem[] }) {
           {items.map((e) => (
             <div
               key={e.id}
-              className="flex gap-5 rounded-xl border border-border bg-surface p-6"
+              className="flex gap-5 rounded-2xl border border-border bg-surface shadow-card p-6"
             >
               <GraduationCap className="mt-1 shrink-0 text-accent" size={24} aria-hidden="true" />
               <div>

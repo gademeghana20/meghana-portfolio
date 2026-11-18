@@ -30,7 +30,7 @@ function Shell({
       {hint && <p className="mt-0.5 text-xs text-muted">{hint}</p>}
       {children}
       {error && (
-        <p id={`${id}-error`} role="alert" className="mt-1.5 text-sm text-red-400">
+        <p id={`${id}-error`} role="alert" className="mt-1.5 text-sm text-danger">
           {error}
         </p>
       )}
@@ -69,7 +69,7 @@ export function TextField({
         placeholder={placeholder}
         aria-invalid={!!error}
         aria-describedby={error ? `${name}-error` : undefined}
-        className={cn(control, error ? "border-red-400" : "border-border")}
+        className={cn(control, error ? "border-danger" : "border-border")}
       />
     </Shell>
   );
@@ -95,7 +95,7 @@ export function SelectField({
         id={name}
         name={name}
         defaultValue={defaultValue}
-        className={cn(control, error ? "border-red-400" : "border-border")}
+        className={cn(control, error ? "border-danger" : "border-border")}
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>
@@ -167,7 +167,7 @@ export function TextAreaField({
         required={required}
         aria-invalid={!!error}
         aria-describedby={error ? `${name}-error` : undefined}
-        className={cn(control, "leading-relaxed", error ? "border-red-400" : "border-border")}
+        className={cn(control, "leading-relaxed", error ? "border-danger" : "border-border")}
       />
     </Shell>
   );

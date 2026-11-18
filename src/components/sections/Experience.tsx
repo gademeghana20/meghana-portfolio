@@ -13,7 +13,7 @@ export function Experience({ items }: { items: ExperienceItem[] }) {
                 aria-hidden="true"
                 className="absolute -left-[31px] top-2 size-3 rounded-full border-2 border-accent bg-background sm:-left-[39px]"
               />
-              <div className="rounded-xl border border-border bg-surface p-6">
+              <div className="rounded-2xl border border-border bg-surface shadow-card p-6">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                   <h3 className="text-xl font-semibold">{e.role}</h3>
                   <p className="font-mono text-sm text-muted">

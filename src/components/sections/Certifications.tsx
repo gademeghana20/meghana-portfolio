@@ -14,7 +14,7 @@ export function Certifications({ items }: { items: Certification[] }) {
         ) : (
           <ul className="grid gap-4 sm:grid-cols-2">
             {items.map((c) => (
-              <li key={c.id} className="flex gap-4 rounded-xl border border-border bg-surface p-5">
+              <li key={c.id} className="flex gap-4 rounded-2xl border border-border bg-surface shadow-card p-5">
                 <Award className="mt-0.5 shrink-0 text-accent" size={20} aria-hidden="true" />
                 <div>
                   <h3 className="font-medium">{c.title}</h3>

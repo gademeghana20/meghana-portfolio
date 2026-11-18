@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Download, Menu, X } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const links = [
   { href: "#home", label: "Home" },
@@ -30,45 +31,49 @@ export function Navbar({
         aria-label="Primary"
         className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-5 sm:px-8"
       >
-        <a href="#home" className="font-semibold tracking-tight">
+        <a href="#home" className="font-display text-lg font-medium tracking-tight">
           {name}
         </a>
 
-        <ul className="hidden items-center gap-5 lg:flex">
-          {links.map((l) => (
-            <li key={l.href}>
-              <a
-                href={l.href}
-                className="text-sm text-muted transition-colors hover:text-foreground"
-              >
-                {l.label}
-              </a>
-            </li>
-          ))}
-          {resumeUrl && (
-            <li>
-              <a
-                href={resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-sm hover:border-accent hover:text-accent"
-              >
-                <Download size={14} aria-hidden="true" /> Resume
-              </a>
-            </li>
-          )}
-        </ul>
+        <div className="flex items-center gap-3">
+          <ul className="hidden items-center gap-5 lg:flex">
+            {links.map((l) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  className="text-sm text-muted transition-colors hover:text-foreground"
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))}
+            {resumeUrl && (
+              <li>
+                <a
+                  href={resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-1.5 text-sm hover:border-accent hover:text-accent"
+                >
+                  <Download size={14} aria-hidden="true" /> Resume
+                </a>
+              </li>
+            )}
+          </ul>
 
-        <button
-          type="button"
-          className="rounded-md p-2 text-muted hover:text-foreground lg:hidden"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+          <ThemeToggle />
+
+          <button
+            type="button"
+            className="rounded-md p-2 text-muted hover:text-foreground lg:hidden"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </nav>
 
       {open && (
