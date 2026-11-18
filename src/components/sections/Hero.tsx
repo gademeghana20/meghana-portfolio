@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Mail } from "lucide-react";
 import type { Profile, SocialLinks } from "@/types/portfolio";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
@@ -63,12 +64,31 @@ export function Hero({
           </div>
         </div>
 
-        {/* Photo placeholder: layered earth-tone arch until a photo is added. */}
-        <div aria-hidden="true" className="rise relative mx-auto hidden w-64 md:block lg:w-72" style={{ "--delay": "250ms" } as React.CSSProperties}>
-          <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-t-full rounded-b-[2rem] bg-sage-soft" />
-          <div className="absolute inset-0 -translate-x-2 translate-y-2 rounded-t-full rounded-b-[2rem] bg-sun-soft" />
-          <div className="relative flex aspect-[3/4] items-center justify-center rounded-t-full rounded-b-[2rem] border border-border bg-rose-soft">
-            <span className="font-display text-7xl text-accent">{initials}</span>
+        {/* Layered earth-tone arch. Holds your photo once uploaded in the admin,
+            otherwise your initials (hidden on phones to keep the first screen clean). */}
+        <div
+          className={`rise relative mx-auto w-56 sm:w-64 md:order-last lg:w-72 ${
+            profile.photoUrl ? "order-first" : "hidden md:block"
+          }`}
+          style={{ "--delay": "250ms" } as React.CSSProperties}
+        >
+          <div aria-hidden="true" className="absolute inset-0 translate-x-4 translate-y-4 rounded-t-full rounded-b-[2rem] bg-sage-soft" />
+          <div aria-hidden="true" className="absolute inset-0 -translate-x-2 translate-y-2 rounded-t-full rounded-b-[2rem] bg-sun-soft" />
+          <div className="relative flex aspect-[3/4] items-center justify-center overflow-hidden rounded-t-full rounded-b-[2rem] border border-border bg-rose-soft">
+            {profile.photoUrl ? (
+              <Image
+                src={profile.photoUrl}
+                alt={`Portrait of ${profile.name}`}
+                fill
+                priority
+                sizes="(min-width: 1024px) 288px, (min-width: 640px) 256px, 224px"
+                className="object-cover object-[50%_20%]"
+              />
+            ) : (
+              <span aria-hidden="true" className="font-display text-7xl text-accent">
+                {initials}
+              </span>
+            )}
           </div>
         </div>
       </Container>

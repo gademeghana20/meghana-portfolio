@@ -7,6 +7,7 @@ export interface Profile {
   intro: string;
   summary: string[];
   careerInterests: string;
+  photoUrl: string | null;
 }
 
 export interface SocialLinks {
