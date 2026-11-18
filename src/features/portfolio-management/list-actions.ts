@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { adminDb, refreshPublicSite } from "./server";
+import { storedImagesOf } from "@/lib/validation/projects";
 import { removeFile } from "./storage";
 
 // Only these tables may be changed through the generic list actions.
@@ -57,15 +58,15 @@ export async function deleteItem(table: string, id: string): Promise<ListResult>
   if (!p.success) return fail;
 
   // Remember uploaded files so they can be cleaned up after the row is gone.
-  let imagePath: string | null = null;
+  let imagePaths: string[] = [];
   let bucket = "";
   if (p.data.table === "projects") {
-    const { data } = await db.from("projects").select("image_path").eq("id", p.data.id).maybeSingle();
-    imagePath = data?.image_path ?? null;
+    const { data } = await db.from("projects").select("images, image_path").eq("id", p.data.id).maybeSingle();
+    imagePaths = data ? storedImagesOf(data).map((i) => i.path) : [];
     bucket = "project-images";
   } else if (p.data.table === "certifications") {
     const { data } = await db.from("certifications").select("file_path").eq("id", p.data.id).maybeSingle();
-    imagePath = data?.file_path ?? null;
+    imagePaths = data?.file_path ? [data.file_path] : [];
     bucket = "certificates";
   }
 
@@ -76,7 +77,7 @@ export async function deleteItem(table: string, id: string): Promise<ListResult>
     .select("id");
   if (error || data?.length !== 1) return fail;
 
-  if (imagePath) await removeFile(db, bucket, imagePath);
+  for (const path of imagePaths) await removeFile(db, bucket, path);
   return done(p.data.table);
 }
 

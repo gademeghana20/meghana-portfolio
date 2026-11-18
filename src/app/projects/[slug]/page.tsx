@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { getPortfolioContent } from "@/lib/content";
+import { ProjectGallery } from "@/components/projects/ProjectGallery";
 import { statusLabel } from "@/components/projects/ProjectCard";
 import { GithubIcon } from "@/components/ui/icons";
 import { Container, Tag } from "@/components/ui/primitives";
@@ -64,16 +64,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
           )}
         </div>
 
-        {project.imageUrl && (
-          <Image
-            src={project.imageUrl}
-            alt={`${project.title} screenshot`}
-            width={768}
-            height={432}
-            sizes="(min-width: 768px) 768px, 100vw"
-            className="mt-8 h-auto w-full rounded-xl border border-border"
-          />
-        )}
+        <ProjectGallery images={project.images} title={project.title} />
 
         <Block title="Problem">
           <p>{project.problem}</p>

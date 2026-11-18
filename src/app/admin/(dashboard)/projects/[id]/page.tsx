@@ -4,6 +4,7 @@ import { z } from "zod";
 import { requireAdmin } from "@/features/auth/dal";
 import { PageHeader } from "@/features/dashboard/PageHeader";
 import { ProjectForm } from "@/features/portfolio-management/projects/ProjectForm";
+import { storedImagesOf } from "@/lib/validation/projects";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function EditProjectPage(props: PageProps<"/admin/projects/[id]">) {
@@ -15,9 +16,11 @@ export default async function EditProjectPage(props: PageProps<"/admin/projects/
   const { data } = await db.from("projects").select("*").eq("id", id).maybeSingle();
   if (!data) notFound();
 
-  const imageUrl = data.image_path
-    ? db.storage.from("project-images").getPublicUrl(data.image_path).data.publicUrl
-    : null;
+  const images = storedImagesOf(data).map((i) => ({
+    path: i.path,
+    url: db.storage.from("project-images").getPublicUrl(i.path).data.publicUrl,
+    crop: { zoom: i.zoom, x: i.x, y: i.y },
+  }));
 
   return (
     <div className="max-w-2xl">
@@ -30,7 +33,7 @@ export default async function EditProjectPage(props: PageProps<"/admin/projects/
           description={data.is_published ? "Currently published." : "Currently a draft."}
         />
       </div>
-      <ProjectForm item={{ ...data, imageUrl }} />
+      <ProjectForm item={{ ...data, images }} />
     </div>
   );
 }

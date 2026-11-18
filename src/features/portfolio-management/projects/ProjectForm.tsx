@@ -1,7 +1,4 @@
-import Image from "next/image";
 import {
-  CheckboxField,
-  FileField,
   SelectField,
   TextAreaField,
   TextField,
@@ -9,6 +6,7 @@ import {
 import { projectStatuses } from "@/lib/validation/projects";
 import { AdminForm } from "../AdminForm";
 import { saveProject } from "./actions";
+import { ProjectImagesField, type ExistingImage } from "./ProjectImagesField";
 
 export interface ProjectValues {
   id: string;
@@ -24,7 +22,7 @@ export interface ProjectValues {
   status: string;
   github_url: string | null;
   live_url: string | null;
-  imageUrl: string | null;
+  images: ExistingImage[];
 }
 
 export function ProjectForm({ item }: { item?: ProjectValues }) {
@@ -116,27 +114,7 @@ export function ProjectForm({ item }: { item?: ProjectValues }) {
         />
       </div>
 
-      <div className="space-y-3">
-        {item?.imageUrl && (
-          <div>
-            <p className="mb-2 text-sm font-medium">Current image</p>
-            <Image
-              src={item.imageUrl}
-              alt={`${item.title} screenshot`}
-              width={320}
-              height={180}
-              className="rounded-lg border border-border object-cover"
-            />
-          </div>
-        )}
-        <FileField
-          name="image"
-          label={item?.imageUrl ? "Replace image" : "Project image / screenshot"}
-          hint="PNG, JPG or WebP, up to 4 MB. Do not upload anything confidential."
-          accept="image/png,image/jpeg,image/webp"
-        />
-        {item?.imageUrl && <CheckboxField name="remove_image" label="Remove the current image" />}
-      </div>
+      <ProjectImagesField initial={item?.images ?? []} />
     </AdminForm>
   );
 }

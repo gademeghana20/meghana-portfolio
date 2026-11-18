@@ -10,6 +10,7 @@ import type {
   SkillLevel,
   SocialLinks,
 } from "@/types/portfolio";
+import { storedImagesOf } from "@/lib/validation/projects";
 import { createPublicClient } from "@/lib/supabase/public";
 
 /** Cache tag revalidated by the admin dashboard after publishing changes. */
@@ -138,7 +139,10 @@ export async function getPortfolioContent(): Promise<PortfolioContent> {
         status: p.status as ProjectStatus,
         githubUrl: p.github_url,
         liveUrl: p.live_url,
-        imageUrl: publicUrl("project-images", p.image_path),
+        images: storedImagesOf(p).flatMap((img) => {
+          const url = publicUrl("project-images", img.path);
+          return url ? [{ url, crop: { zoom: img.zoom, x: img.x, y: img.y } }] : [];
+        }),
       }),
     ),
     certifications: certifications.data!.map(

@@ -70,7 +70,13 @@ export interface Project {
   status: ProjectStatus;
   githubUrl: string | null;
   liveUrl: string | null;
-  imageUrl: string | null;
+  /** Up to 5 pictures; the first is shown on the card. */
+  images: ProjectImage[];
+}
+
+export interface ProjectImage {
+  url: string;
+  crop: { zoom: number; x: number; y: number };
 }
 
 export interface Certification {

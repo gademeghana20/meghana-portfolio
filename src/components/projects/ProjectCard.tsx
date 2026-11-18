@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import type { Project, ProjectStatus } from "@/types/portfolio";
 import { GithubIcon } from "@/components/ui/icons";
+import { ProjectImage } from "@/components/projects/ProjectImage";
 import { Tag } from "@/components/ui/primitives";
 
 export const statusLabel: Record<ProjectStatus, string> = {
@@ -14,20 +14,18 @@ export const statusLabel: Record<ProjectStatus, string> = {
 export function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="lift flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-card">
-      {project.imageUrl ? (
-        <div className="relative h-40 border-b border-border bg-surface-2">
-          <Image
-            src={project.imageUrl}
+      {project.images[0] ? (
+        <div className="relative aspect-[16/10] overflow-hidden border-b border-border bg-surface-2">
+          <ProjectImage
+            image={project.images[0]}
             alt={`${project.title} screenshot`}
-            fill
             sizes="(min-width: 768px) 40vw, 100vw"
-            className="object-cover"
           />
         </div>
       ) : (
         <div
           aria-hidden="true"
-          className="flex h-40 items-center justify-center border-b border-border bg-sage-soft font-mono text-sm text-muted"
+          className="flex aspect-[16/10] items-center justify-center border-b border-border bg-sage-soft font-mono text-sm text-muted"
         >
           Screenshot coming soon
         </div>

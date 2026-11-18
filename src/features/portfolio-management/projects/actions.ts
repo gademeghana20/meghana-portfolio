@@ -3,7 +3,13 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { toLines, toList } from "@/lib/validation/lists";
-import { projectSchema } from "@/lib/validation/projects";
+import { z } from "zod";
+import {
+  imageSlotsSchema,
+  projectSchema,
+  storedImagesOf,
+  type StoredImage,
+} from "@/lib/validation/projects";
 import { slugify } from "@/lib/validation/skills";
 import { adminDb, refreshPublicSite, saveFailed, validationError } from "../server";
 import { chosenFile, removeFile, uploadImage } from "../storage";
@@ -32,28 +38,48 @@ export async function saveProject(
   }
 
   const published = formData.get("intent") === "publish";
-  const removeImage = formData.get("remove_image") === "on";
-  const file = chosenFile(formData.get("image"));
-
-  // Current image (if editing), so the old file can be deleted afterwards.
-  let oldPath: string | null = null;
+  // Pictures the project has now (if editing), so removed ones can be deleted afterwards.
+  let oldPaths: string[] = [];
   if (id) {
-    const { data } = await db.from("projects").select("image_path").eq("id", id).maybeSingle();
+    const { data } = await db.from("projects").select("images, image_path").eq("id", id).maybeSingle();
     if (!data) return saveFailed;
-    oldPath = data.image_path;
+    oldPaths = storedImagesOf(data).map((i) => i.path);
   }
 
-  let newPath: string | null = null;
-  if (file) {
+  let slots: z.infer<typeof imageSlotsSchema> = [];
+  try {
+    const slotsParsed = imageSlotsSchema.safeParse(JSON.parse(String(formData.get("images_meta") || "[]")));
+    if (!slotsParsed.success) return saveFailed;
+    slots = slotsParsed.data;
+  } catch {
+    return saveFailed;
+  }
+
+  // Keep existing pictures (only ones this project really has), upload new ones.
+  const images: StoredImage[] = [];
+  const uploaded: string[] = [];
+  const cleanupUploads = async () => {
+    for (const p of uploaded) await removeFile(db, BUCKET, p);
+  };
+  for (const slot of slots) {
+    const crop = { zoom: slot.zoom, x: slot.x, y: slot.y };
+    if (slot.kind === "existing") {
+      if (oldPaths.includes(slot.ref)) images.push({ path: slot.ref, ...crop });
+      continue;
+    }
+    const file = chosenFile(formData.get(`image_${slot.ref}`));
+    if (!file) continue;
     const up = await uploadImage(db, BUCKET, file);
     if ("error" in up) {
+      await cleanupUploads();
       return {
         status: "error",
         message: "Please fix the highlighted fields.",
-        fieldErrors: { image: up.error },
+        fieldErrors: { images: up.error },
       };
     }
-    newPath = up.path;
+    uploaded.push(up.path);
+    images.push({ path: up.path, ...crop });
   }
 
   const row = {
@@ -65,7 +91,8 @@ export async function saveProject(
     github_url: github_url === "" ? null : github_url,
     live_url: live_url === "" ? null : live_url,
     is_published: published,
-    ...(newPath ? { image_path: newPath } : removeImage ? { image_path: null } : {}),
+    images,
+    image_path: null,
   };
 
   let failed: ActionState | null = null;
@@ -84,11 +111,12 @@ export async function saveProject(
   }
 
   if (failed) {
-    await removeFile(db, BUCKET, newPath); // don't leave an orphan upload behind
+    await cleanupUploads(); // don't leave orphan uploads behind
     return failed;
   }
 
-  if (oldPath && (newPath || removeImage)) await removeFile(db, BUCKET, oldPath);
+  const kept = new Set(images.map((i) => i.path));
+  for (const p of oldPaths) if (!kept.has(p)) await removeFile(db, BUCKET, p);
 
   refreshPublicSite();
   revalidatePath(LIST_PATH);

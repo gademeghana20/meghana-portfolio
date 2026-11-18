@@ -40,3 +40,6 @@ export function cropStyles({ zoom, x, y }: PhotoCrop): {
     },
   };
 }
+
+/** Default framing for project pictures (centered). */
+export const DEFAULT_PROJECT_CROP: PhotoCrop = { zoom: 1, x: 50, y: 50 };
