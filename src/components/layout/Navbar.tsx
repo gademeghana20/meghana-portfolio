@@ -16,13 +16,7 @@ const links = [
   { href: "#contact", label: "Contact" },
 ];
 
-export function Navbar({
-  name,
-  resumeUrl,
-}: {
-  name: string;
-  resumeUrl: string | null;
-}) {
+export function Navbar({ resumeUrl }: { resumeUrl: string | null }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
   const close = () => setOpen(false);
@@ -48,12 +42,8 @@ export function Navbar({
     <header className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur">
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-5 sm:px-8"
+        className="mx-auto flex h-16 w-full max-w-5xl items-center justify-end px-5 sm:px-8 lg:justify-center"
       >
-        <a href="#home" className="font-display text-lg font-medium tracking-tight">
-          {name}
-        </a>
-
         <div className="flex items-center gap-3">
           <ul className="hidden items-center gap-5 lg:flex">
             {links.map((l) => {
