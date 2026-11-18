@@ -62,8 +62,12 @@ export async function getPortfolioContent(): Promise<PortfolioContent> {
     path ? db.storage.from(bucket).getPublicUrl(path).data.publicUrl : null;
 
   const social: SocialLinks = {
-    github: links.data!.find((l) => l.platform === "github")?.url ?? null,
-    linkedin: links.data!.find((l) => l.platform === "linkedin")?.url ?? null,
+    links: links.data!.map((l) => ({
+      id: l.id,
+      platform: l.platform,
+      label: l.label,
+      url: l.url,
+    })),
     email: profile.data!.email,
   };
 

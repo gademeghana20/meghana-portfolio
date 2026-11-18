@@ -1,6 +1,6 @@
 import { ArrowUp, Mail } from "lucide-react";
 import type { SocialLinks } from "@/types/portfolio";
-import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
+import { SocialIcon } from "@/components/ui/SocialIcon";
 import { Container } from "@/components/ui/primitives";
 import { CopyrightYear } from "./CopyrightYear";
 
@@ -17,17 +17,20 @@ export function Footer({ name, social }: { name: string; social: SocialLinks }) 
           </p>
         </div>
 
-        <div className="flex items-center gap-5">
-          {social.github && (
-            <a href={social.github} className={iconLink} aria-label="GitHub" target="_blank" rel="noopener noreferrer">
-              <GithubIcon className="size-5" />
+        <div className="flex flex-wrap items-center justify-center gap-5">
+          {social.links.map((l) => (
+            <a
+              key={l.id}
+              href={l.url}
+              className={iconLink}
+              aria-label={l.label}
+              title={l.label}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <SocialIcon platform={l.platform} className="size-5" />
             </a>
-          )}
-          {social.linkedin && (
-            <a href={social.linkedin} className={iconLink} aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-              <LinkedinIcon className="size-5" />
-            </a>
-          )}
+          ))}
           {social.email && (
             <a href={`mailto:${social.email}`} className={iconLink} aria-label="Email">
               <Mail className="size-5" aria-hidden="true" />

@@ -11,9 +11,16 @@ export interface Profile {
   photoCrop: { zoom: number; x: number; y: number };
 }
 
+export interface SocialLink {
+  id: string;
+  platform: string;
+  label: string;
+  url: string;
+}
+
 export interface SocialLinks {
-  github: string | null;
-  linkedin: string | null;
+  /** Published links, in the order set in the admin. */
+  links: SocialLink[];
   email: string | null;
 }
 

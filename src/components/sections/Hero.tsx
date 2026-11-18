@@ -1,7 +1,7 @@
 import { Mail } from "lucide-react";
 import { ProfilePhoto } from "@/components/ui/ProfilePhoto";
 import type { Profile, SocialLinks } from "@/types/portfolio";
-import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
+import { SocialIcon } from "@/components/ui/SocialIcon";
 import { ButtonLink, Container } from "@/components/ui/primitives";
 
 export function Hero({
@@ -51,16 +51,19 @@ export function Hero({
           </div>
 
           <div className="rise mt-8 flex items-center gap-3" style={{ "--delay": "460ms" } as React.CSSProperties}>
-            {social.github && (
-              <a href={social.github} aria-label="GitHub profile" className={iconLink} target="_blank" rel="noopener noreferrer">
-                <GithubIcon className="size-5" />
+            {social.links.map((l) => (
+              <a
+                key={l.id}
+                href={l.url}
+                aria-label={l.label}
+                title={l.label}
+                className={iconLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SocialIcon platform={l.platform} className="size-5" />
               </a>
-            )}
-            {social.linkedin && (
-              <a href={social.linkedin} aria-label="LinkedIn profile" className={iconLink} target="_blank" rel="noopener noreferrer">
-                <LinkedinIcon className="size-5" />
-              </a>
-            )}
+            ))}
           </div>
         </div>
 

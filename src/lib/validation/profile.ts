@@ -24,16 +24,3 @@ export const contactSchema = z.object({
   email: z.email("Enter a valid email address.").max(254),
 });
 
-// Only https links are accepted, so a typo can't publish a broken or unsafe URL.
-const httpsUrl = z
-  .string()
-  .trim()
-  .max(300)
-  .refine((v) => v === "" || /^https:\/\/[^\s]+$/.test(v), {
-    message: "Must start with https:// (or leave empty to remove).",
-  });
-
-export const socialSchema = z.object({
-  github: httpsUrl,
-  linkedin: httpsUrl,
-});

@@ -12,6 +12,7 @@ const tables = {
   projects: "/admin/projects",
   certifications: "/admin/certifications",
   skill_categories: "/admin/skills",
+  social_links: "/admin/social",
 } as const;
 
 type Table = keyof typeof tables;
